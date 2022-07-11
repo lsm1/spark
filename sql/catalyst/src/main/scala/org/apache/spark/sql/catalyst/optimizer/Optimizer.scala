@@ -1185,7 +1185,8 @@ object CollapseWindow extends Rule[LogicalPlan] {
  */
 object TransposeWindow extends Rule[LogicalPlan] {
   private def compatiblePartitions(ps1 : Seq[Expression], ps2: Seq[Expression]): Boolean = {
-    ps1.length < ps2.length && ps2.take(ps1.length).permutations.exists(ps1.zip(_).forall {
+    ps1.length != 0 && ps1.length < ps2.length &&
+      ps2.take(ps1.length).permutations.exists(ps1.zip(_).forall {
       case (l, r) => l.semanticEquals(r)
     })
   }
